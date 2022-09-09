@@ -7,7 +7,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-
+    statusBar = new Statusbar();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -15,6 +15,17 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.checkCollisions();
+    }
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.hit()
+                }
+            });
+        }, 1000 / 20);
     }
 
     setWorld() {
@@ -29,7 +40,9 @@ class World {
 
         this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
 
+
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.statusBar);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
@@ -48,17 +61,30 @@ class World {
         });
     }
 
+
+
     addToMap(moveObj) {
         if (moveObj.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(moveObj.width, 0)
-            this.ctx.scale(-1, 1)
-            moveObj.x = moveObj.x * -1;
+            this.flipImage(moveObj);
         }
-        this.ctx.drawImage(moveObj.img, moveObj.x, moveObj.y, moveObj.width, moveObj.height);
+        moveObj.draw(this.ctx)
+        moveObj.drawFrame(this.ctx)
+
         if (moveObj.otherDirection) {
-            moveObj.x = moveObj.x * -1;
-            this.ctx.restore();
+            this.flipImageBack(moveObj);
         }
     }
+
+    flipImage(moveObj) {
+        this.ctx.save();
+        this.ctx.translate(moveObj.width, 0)
+        this.ctx.scale(-1, 1)
+        moveObj.x = moveObj.x * -1;
+    }
+    flipImageBack(moveObj) {
+        moveObj.x = moveObj.x * -1;
+        this.ctx.restore();
+    }
+
+
 }

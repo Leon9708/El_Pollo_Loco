@@ -1,19 +1,14 @@
-class MoveableObject {
-    x = 129;
-    y = 280;
-    img;
-    height = 150;
-    width = 100;
-    imageCache = {};
-    currentImage = 0;
+class MoveableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
     accleration = 2.5;
+    energy = 100;
+    lastHit = 0;
 
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround()) {
+            if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY
                 this.speedY -= this.accleration;
             }
@@ -25,35 +20,55 @@ class MoveableObject {
     }
 
     playAnimation(images) {
-        let i = this.currentImage % this.imagesWalking.length
+        let i = this.currentImage % images.length
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
     }
 
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
 
-    loadImages(arr) {
-        arr.forEach((path) => {
 
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
+
+
+    jump() {
+        this.speedY = 27.5;
     }
 
 
     moveRight() {
-        console.log('Moving right')
+        this.x += this.speed;
+
     }
 
     moveLeft() {
-        setInterval(() => {
-            this.x -= this.speed;
-        }, 1000 / 60)
+        this.x -= this.speed;
+
+
     }
 
+    isColliding(obj) {
+        return this.x + this.width > obj.x &&
+            this.y + this.height > obj.y &&
+            this.x < obj.x &&
+            this.y < obj.y + obj.height
+    }
+
+    hit() {
+        this.energy -= 10
+        if (this.energy <= 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isDead() {
+        return this.energy == 0;
+    }
+
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit;
+        timepassed = timepassed / 1000;
+        return timepassed < 1.5;
+    }
 }
