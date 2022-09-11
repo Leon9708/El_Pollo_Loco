@@ -1,7 +1,7 @@
 class DrawableObject {
     x = 129;
     y = 280;
-    otherDirection = false;
+
     height = 150;
     width = 100;
     imageCache = {};

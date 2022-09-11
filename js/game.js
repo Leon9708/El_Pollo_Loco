@@ -4,17 +4,23 @@ let keyboard = new Keyboard();
 
 function init() {
     canvas = document.getElementById('canvas');
+    document.getElementById('background').classList.add('d-none');
     world = new World(canvas, keyboard);
     console.log('my character is', world.character);
 }
 
 window.addEventListener("keydown", (e) => {
-
+    if (e.keyCode == 68) {
+        keyboard.d = true;
+    }
     if (e.keyCode == 39) {
         keyboard.right = true;
+        keyboard.rightHold = true;
+
     }
     if (e.keyCode == 37) {
         keyboard.left = true;
+        keyboard.rightHold = false;
     }
     if (e.keyCode == 38) {
         keyboard.up = true;
@@ -43,5 +49,8 @@ window.addEventListener("keyup", (e) => {
     }
     if (e.keyCode == 32) {
         keyboard.space = false;
+    }
+    if (e.keyCode == 68) {
+        keyboard.d = false;
     }
 });

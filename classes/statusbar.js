@@ -14,15 +14,17 @@ class Statusbar extends DrawableObject {
     constructor() {
         super();
         this.loadImages(this.imagesLife);
-        this.x = 100;
-        this.y = 100;
+        this.x = 20;
+        this.y = 0;
+        this.height = 60;
+        this.width = 200;
         this.setLife(100);
 
     }
 
     setLife(life) {
-        this.life = life
-        let path = this[this.resolveImageIndex()];
+        this.life = life;
+        let path = this.imagesLife[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
@@ -37,7 +39,7 @@ class Statusbar extends DrawableObject {
             return 2
         } else if (this.life > 20) {
             return 1
-        } else if (this.life === 0) {
+        } else {
             return 0
         }
     }

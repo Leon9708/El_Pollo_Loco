@@ -4,6 +4,7 @@ class MoveableObject extends DrawableObject {
     accleration = 2.5;
     energy = 100;
     lastHit = 0;
+    otherDirection = false;
 
     applyGravity() {
         setInterval(() => {
@@ -15,7 +16,12 @@ class MoveableObject extends DrawableObject {
     }
 
     isAboveGround() {
-        return this.y < 160;
+        if (this instanceof ThrowableObject) {
+            return true;
+        } else {
+            return this.y < 160;
+        }
+
     }
 
     playAnimation(images) {
@@ -51,7 +57,7 @@ class MoveableObject extends DrawableObject {
     }
 
     hit() {
-        this.energy -= 10
+        this.energy -= 4;
         if (this.energy <= 0) {
             this.energy = 0;
         } else {
@@ -60,7 +66,7 @@ class MoveableObject extends DrawableObject {
     }
 
     isDead() {
-        return this.energy == 0;
+        return this.energy === 0;
     }
 
     isHurt() {
