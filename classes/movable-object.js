@@ -1,6 +1,5 @@
 class MoveableObject extends DrawableObject {
     speed = 0.15;
-    otherDirection = false;
     speedY = 0;
     accleration = 2.5;
     energy = 100;
@@ -20,13 +19,11 @@ class MoveableObject extends DrawableObject {
     }
 
     playAnimation(images) {
-        let i = this.currentImage % images.length
+        let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
     }
-
-
 
 
 

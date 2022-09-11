@@ -2,7 +2,6 @@ class World {
 
     character = new Character();
     level = level1;
-
     canvas;
     ctx;
     keyboard;
@@ -13,8 +12,8 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.draw();
         this.setWorld();
+        this.draw();
         this.checkCollisions();
     }
 
@@ -38,14 +37,11 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
 
-        this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
-
-
         this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.statusBar);
-        this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
+        this.addToMap(this.character);
+        this.addToMap(this.statusBar);
 
         this.ctx.translate(-this.camera_x, 0);
 
@@ -67,8 +63,8 @@ class World {
         if (moveObj.otherDirection) {
             this.flipImage(moveObj);
         }
-        moveObj.draw(this.ctx)
-        moveObj.drawFrame(this.ctx)
+        moveObj.draw(this.ctx);
+        moveObj.drawFrame(this.ctx);
 
         if (moveObj.otherDirection) {
             this.flipImageBack(moveObj);
@@ -77,13 +73,14 @@ class World {
 
     flipImage(moveObj) {
         this.ctx.save();
-        this.ctx.translate(moveObj.width, 0)
-        this.ctx.scale(-1, 1)
-        moveObj.x = moveObj.x * -1;
+        this.ctx.translate(moveObj.width, 0);
+        this.ctx.scale(-1, 1);
+        moveObj.x = moveObj.x * -1;;
+
     }
     flipImageBack(moveObj) {
         moveObj.x = moveObj.x * -1;
-        this.ctx.restore();
+
     }
 
 
