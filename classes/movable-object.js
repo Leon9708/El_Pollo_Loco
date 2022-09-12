@@ -6,6 +6,7 @@ class MoveableObject extends DrawableObject {
     lastHit = 0;
     otherDirection = false;
 
+
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -63,6 +64,27 @@ class MoveableObject extends DrawableObject {
         } else {
             this.lastHit = new Date().getTime();
         }
+    }
+
+    throw () {
+        this.bottles -= 1;
+        if (this.bottles <= 0) {
+            this.bottles = 0;
+        }
+    }
+
+    throwcheck() {
+        if (this.bottles >= 1)
+            return true;
+
+    }
+
+    collect() {
+        this.bottles += 1;
+        if (this.bottles >= 10) {
+            this.bottles = 10;
+        }
+
     }
 
     isDead() {

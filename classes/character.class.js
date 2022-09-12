@@ -86,20 +86,13 @@ class Character extends MoveableObject {
         }, 1000 / 30);
         setInterval(() => {
             if (this.isDead()) {
-                if (this.currentImage <= this.imagesDead.length) {
-                    this.playAnimation(this.imagesDead);
-                }
-
+                this.playAnimation(this.imagesDead);
             } else if (this.isHurt()) {
                 this.playAnimation(this.imagesHurt);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.imagesJumping);
-            } else if (!this.world.keyboard.right && !this.world.keyboard.left) {
-                loadImage('img/img/2_character_pepe/1_idle/idle/I-1.png');
             } else if (this.world.keyboard.right || this.world.keyboard.left) {
                 this.playAnimation(this.imagesWalking);
-            } else {
-                this.playAnimation(this.imageIdle)
             }
 
         }, 75)

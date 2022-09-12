@@ -7,7 +7,9 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new Statusbar();
+    bottleBar = new Bottlebar();
     throwableObjects = [];
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -16,6 +18,7 @@ class World {
         this.setWorld();
         this.draw();
         this.run();
+
     }
 
     run() {
@@ -23,12 +26,21 @@ class World {
             this.checkCollisions();
             this.checkThrowObjects();
         }, 1000 / 20);
+        setInterval(() => {
+            this.collectObjects();
+        }, 200);
     }
 
     checkThrowObjects() {
         if (this.keyboard.d && this.keyboard.rightHold == true) {
             let bottle = new ThrowableObject(this.character.x, this.character.y);
-            this.throwableObjects.push(bottle);
+            if (this.character.throwcheck() === true) {
+                this.throwableObjects.push(bottle);
+            }
+            this.character.throw();
+            this.bottleBar.setBottles(this.character.bottles);
+
+
         }
     }
 
@@ -37,6 +49,18 @@ class World {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBar.setLife(this.character.energy);
+            }
+        });
+    }
+
+    collectObjects() {
+        this.level.bottles.forEach((bottle) => {
+            if (this.character.isColliding(bottle)) {
+                this.character.collect(bottle);
+                let i = this.level.bottles.indexOf(bottle);
+                this.level.bottles.splice(i, 1);
+                this.bottleBar.setBottles(this.character.bottles);
+
             }
         });
     }
@@ -54,10 +78,12 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addToMap(this.character);
+        this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
+        this.addToMap(this.bottleBar);
 
         let self = this;
         requestAnimationFrame(function() {

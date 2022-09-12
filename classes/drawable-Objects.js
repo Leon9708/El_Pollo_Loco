@@ -7,6 +7,8 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
     img;
+    bottles = 5;
+
 
 
     draw(ctx) {
@@ -14,7 +16,7 @@ class DrawableObject {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof bottle) {
             ctx.beginPath();
             ctx.lineWidth = "4";
             ctx.strokeStyle = "blue";
