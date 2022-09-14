@@ -6,6 +6,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    coinBar = new Coinbar();
     statusBar = new Statusbar();
     bottleBar = new Bottlebar();
     throwableObjects = [];
@@ -39,8 +40,6 @@ class World {
             }
             this.character.throw();
             this.bottleBar.setBottles(this.character.bottles);
-
-
         }
     }
 
@@ -56,11 +55,18 @@ class World {
     collectObjects() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
-                this.character.collect(bottle);
+                this.character.collectBottles();
                 let i = this.level.bottles.indexOf(bottle);
                 this.level.bottles.splice(i, 1);
                 this.bottleBar.setBottles(this.character.bottles);
-
+            }
+        });
+        this.level.coins.forEach(coin => {
+            if (this.character.isColliding(coin)) {
+                this.character.collectCoins(coin);
+                let i = this.level.coins.indexOf(coin);
+                this.level.coins.splice(i, 1);
+                this.coinBar.setCoins(this.character.coins);
             }
         });
     }
@@ -79,9 +85,11 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.coinBar);
         this.addToMap(this.statusBar);
         this.addToMap(this.bottleBar);
 
@@ -121,8 +129,5 @@ class World {
     flipImageBack(moveObj) {
         moveObj.x = moveObj.x * -1;
         this.ctx.restore();
-
     }
-
-
 }

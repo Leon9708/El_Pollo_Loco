@@ -1,7 +1,11 @@
 body {
+    background-image: url('img/img/5_background/desert.jpg');
+    background-size: cover;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
 canvas {
@@ -12,26 +16,11 @@ canvas {
     background-color: black;
 }
 
-@keyframes gradient {
-    0% {
-        background: radial-gradient(circle at center, rgba( 255, 125, 125, 0) 0%, #fff 0%, #fff 100%);
-    }
-    25% {
-        background: radial-gradient(circle at center, rgba( 255, 125, 125, 0.3) 24%, #fff 25%, #fff 100%);
-    }
-    50% {
-        background: radial-gradient(circle at center, rgba( 255, 125, 125, 0.5) 49%, #fff 50%, #fff 100%);
-    }
-    75% {
-        background: radial-gradient(circle at center, rgba( 255, 125, 125, 0.8) 74%, #fff 75%, #fff 100%);
-    }
-    100% {
-        color: #fff;
-        background: radial-gradient(circle at center, #f88 99%, #fff 100%, #fff 100%);
-    }
-}
-
 button {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 350px;
     height: 60px;
     border: none;
@@ -53,21 +42,56 @@ button:active {
     box-shadow: none;
 }
 
-.background {
-    background-image: url('img/img/9_intro_outro_screens/start/startscreen_1.png');
-    background-size: cover;
-    background-position: center;
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.container_startscreen {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 800px;
     height: 480px;
+    width: 720px;
 }
 
 .d-none {
-    display: none;
+    display: none !important;
+}
+
+.box {
+    z-index: 5;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 480px;
+    width: 720px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bar {
+    position: relative;
+    height: 10px;
+    width: 75%;
+    border: 10px solid rgb(255, 150, 0);
+    border-radius: 15px;
+}
+
+.progress {
+    position: absolute;
+    background-color: #ffffff;
+    height: 10px;
+    border-radius: 15px;
+}
+
+.progress_num {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bolder;
+    text-align: center;
 }

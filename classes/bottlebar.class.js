@@ -23,7 +23,6 @@ class Bottlebar extends DrawableObject {
 
     setBottles(bottles) {
         this.bottles = bottles;
-        console.log(this.bottles);
         let path = this.imagesBottles[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
@@ -35,9 +34,9 @@ class Bottlebar extends DrawableObject {
             return 4
         } else if (this.bottles > 6) {
             return 3
-        } else if (this.bottles > 4) {
+        } else if (this.bottles > 3) {
             return 2
-        } else if (this.bottles > 2) {
+        } else if (this.bottles > 0) {
             return 1
         } else {
             return 0

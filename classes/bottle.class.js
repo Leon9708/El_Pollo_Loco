@@ -5,7 +5,7 @@ class bottle extends MoveableObject {
         this.height = 100;
         this.width = 60;
         this.x = 300 + Math.random() * 1500;
-        this.y = 50 + Math.random() * 320;
+        this.y = 340;
     }
 
 

@@ -8,6 +8,8 @@ class DrawableObject {
     currentImage = 0;
     img;
     bottles = 5;
+    coins = 0;
+
 
 
 

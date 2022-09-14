@@ -79,13 +79,20 @@ class MoveableObject extends DrawableObject {
 
     }
 
-    collect() {
+    collectBottles() {
         this.bottles += 1;
-        if (this.bottles >= 10) {
+        if (this.bottles >= 10)
             this.bottles = 10;
-        }
-
     }
+
+    collectCoins() {
+        this.coins += 1;
+        if (this.coins === 5)
+            this.coins = 0;
+        x
+    }
+
+
 
     isDead() {
         return this.energy === 0;
