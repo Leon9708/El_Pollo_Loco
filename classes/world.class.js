@@ -35,9 +35,9 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.d && this.keyboard.rightHold == true) {
+        if (this.keyboard.d || this.keyboard.f && this.keyboard.rightHold == true) {
             this.character.throwAgain();
-            if (this.character.allowedToThrow == true) {
+            if (this.character.allowedToThrow === true) {
                 if (this.character.throwcheck() === true) {
                     let bottle = new ThrowableObject(this.character.x, this.character.y);
                     this.throwableObjects.push(bottle);
@@ -63,7 +63,7 @@ class World {
     bottleCollision(bottle) {
         this.level.enemies.forEach((enemy) => {
             if (bottle.isColliding(enemy)) {
-                this.character.chickDead()
+                this.character.chickenDead();
             }
         })
     }
@@ -103,6 +103,7 @@ class World {
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.coinBar);

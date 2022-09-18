@@ -9,7 +9,7 @@ class MoveableObject extends DrawableObject {
     otherDirection = false;
     gameOver = true;
     world;
-    chickenDead;
+
 
     applyGravity() {
         setInterval(() => {
@@ -110,14 +110,17 @@ class MoveableObject extends DrawableObject {
 
     collectCoins() {
         this.coins += 1;
-        if (this.coins === 5)
+        if (this.coins === 5) {
             this.coins = 0;
+            if (energy >= 1) {
+                this.energy += 20;
+            }
+        }
     }
 
 
-    chickDead() {
-        this.chickenDead = true;
-        console.log('chickendead', this.chickenDead)
+    chickenDead() {
+
     }
 
     isDead() {
