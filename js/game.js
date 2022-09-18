@@ -1,17 +1,14 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-
+let background = document.getElementById('background');
 
 function render() {
     document.getElementById('background').classList.add('d-none');
     load();
-
 }
 
 function load() {
-    let elem = document.getElementById("progress");
-    let progress = document.getElementById("progressNum")
     let width = 1;
     let id = setInterval(frame, 25);
 
@@ -24,8 +21,8 @@ function load() {
             }, 400)
         } else {
             width++;
-            elem.style.width = width + "%";
-            progress.innerHTML = width + "%"
+            document.getElementById("progress").style.width = width + "%";
+            document.getElementById("progressNum").innerHTML = width + "%"
         }
     }
 }
@@ -36,6 +33,30 @@ function gameInit() {
     world = new World(canvas, keyboard);
     console.log('my character is', world.character);
 }
+
+
+
+function enterFullscreen() {
+    if (canvas.requestFullscreen) {
+        canvas.requestFullscreen();
+    } else if (element.msRequestFullscreen) {
+        canvas.msRequestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+        canvas.webkitRequestFullscreen();
+    }
+}
+
+function openOptions() {
+    let options = document.getElementById('options');
+
+    if (options.classList.contains('closed')) {
+        options.classList.remove('closed');
+    } else {
+        options.classList.add('closed');
+    }
+}
+
+
 
 window.addEventListener("keydown", (e) => {
     if (e.keyCode == 68) {

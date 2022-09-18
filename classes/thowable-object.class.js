@@ -8,14 +8,16 @@ class ThrowableObject extends MoveableObject {
         this.width = 60;
         this.throw();
 
-
     }
 
     throw (x, y) {
         this.speedY = 30;
         this.applyGravity();
         setInterval(() => {
-            this.x += 10;
-        }, 20)
+            this.x += 5;
+            world.bottleCollision(this);
+        }, 10)
     }
+
+
 }

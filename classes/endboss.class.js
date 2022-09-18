@@ -13,11 +13,15 @@ class Endboss extends MoveableObject {
         'img/img/4_enemie_boss_chicken/2_alert/G11.png',
         'img/img/4_enemie_boss_chicken/2_alert/G12.png',
     ]
+    imagesAttacking = [
+
+    ]
+
 
     constructor() {
         super().loadImage(this.imagesWalking[0]);
-
         this.loadImages(this.imagesWalking);
+        this.loadImages(this.imagesAttacking);
         this.x = 2150;
         this.animate();
     }

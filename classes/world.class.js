@@ -6,6 +6,8 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+
+
     coinBar = new Coinbar();
     statusBar = new Statusbar();
     bottleBar = new Bottlebar();
@@ -34,12 +36,16 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.d && this.keyboard.rightHold == true) {
-            let bottle = new ThrowableObject(this.character.x, this.character.y);
-            if (this.character.throwcheck() === true) {
-                this.throwableObjects.push(bottle);
+            this.character.throwAgain();
+            if (this.character.allowedToThrow == true) {
+                if (this.character.throwcheck() === true) {
+                    let bottle = new ThrowableObject(this.character.x, this.character.y);
+                    this.throwableObjects.push(bottle);
+                }
+                this.character.throw();
+                this.bottleBar.setBottles(this.character.bottles);
+                this.character.allowedToThrow = false;
             }
-            this.character.throw();
-            this.bottleBar.setBottles(this.character.bottles);
         }
     }
 
@@ -49,7 +55,17 @@ class World {
                 this.character.hit();
                 this.statusBar.setLife(this.character.energy);
             }
+
         });
+
+    }
+
+    bottleCollision(bottle) {
+        this.level.enemies.forEach((enemy) => {
+            if (bottle.isColliding(enemy)) {
+                this.character.chickDead()
+            }
+        })
     }
 
     collectObjects() {

@@ -23,7 +23,6 @@ class Coinbar extends DrawableObject {
 
     setCoins(coins) {
         this.coins = coins;
-        console.log(this.coins);
         let path = this.imagesCoin[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }

@@ -4,8 +4,12 @@ class MoveableObject extends DrawableObject {
     accleration = 2.5;
     energy = 100;
     lastHit = 0;
+    lastTime = 0;
+    allowedToThrow = false;
     otherDirection = false;
-
+    gameOver = true;
+    world;
+    chickenDead;
 
     applyGravity() {
         setInterval(() => {
@@ -32,6 +36,17 @@ class MoveableObject extends DrawableObject {
         this.currentImage++;
     }
 
+    playAnimationDead(images) {
+        let i = 0
+        if (i === images.length) {
+            this.loadImage(images[images.length])
+            this.gameOver = false;
+        } else {
+            let path = images[i];
+            this.img = this.imageCache[path];
+            i++;
+        }
+    }
 
 
     jump() {
@@ -76,8 +91,16 @@ class MoveableObject extends DrawableObject {
     throwcheck() {
         if (this.bottles >= 1)
             return true;
-
     }
+
+    throwAgain() {
+        let now = new Date().getTime(); // Time in milliseconds
+        if (now - this.lastTime >= 1000) {
+            this.allowedToThrow = true
+            this.lastTime = now;
+        }
+    }
+
 
     collectBottles() {
         this.bottles += 1;
@@ -89,10 +112,13 @@ class MoveableObject extends DrawableObject {
         this.coins += 1;
         if (this.coins === 5)
             this.coins = 0;
-        x
     }
 
 
+    chickDead() {
+        this.chickenDead = true;
+        console.log('chickendead', this.chickenDead)
+    }
 
     isDead() {
         return this.energy === 0;
