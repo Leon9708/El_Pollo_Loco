@@ -63,7 +63,7 @@ class World {
     bottleCollision(bottle) {
         this.level.enemies.forEach((enemy) => {
             if (bottle.isColliding(enemy)) {
-                this.character.chickenDead();
+                this.level.enemiesenemy.killingChicken();
             }
         })
     }

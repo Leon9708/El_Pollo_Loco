@@ -11,6 +11,7 @@ class MoveableObject extends DrawableObject {
     world;
 
 
+
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -94,7 +95,7 @@ class MoveableObject extends DrawableObject {
     }
 
     throwAgain() {
-        let now = new Date().getTime(); // Time in milliseconds
+        let now = new Date().getTime();
         if (now - this.lastTime >= 1000) {
             this.allowedToThrow = true
             this.lastTime = now;
@@ -118,10 +119,6 @@ class MoveableObject extends DrawableObject {
         }
     }
 
-
-    chickenDead() {
-
-    }
 
     isDead() {
         return this.energy === 0;
