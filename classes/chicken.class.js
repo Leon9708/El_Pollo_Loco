@@ -35,9 +35,9 @@ class Chicken extends MoveableObject {
 
     }
 
-
-    killingChicken() {
+    killChicken() {
         this.chickenDead = true;
+        this.speed = 0;
     }
 
 }

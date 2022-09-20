@@ -1,5 +1,5 @@
 class ChickenSmall extends MoveableObject {
-
+    chickenDead = false;
     height = 30;
     width = 55;
     y = 395;
@@ -31,5 +31,9 @@ class ChickenSmall extends MoveableObject {
             }
         }, 100)
 
+    }
+    killChicken() {
+        this.chickenDead = true;
+        this.speed = 0;
     }
 }

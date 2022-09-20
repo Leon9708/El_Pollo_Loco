@@ -6,11 +6,11 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-
-
+    bottleCollision;
     coinBar = new Coinbar();
     statusBar = new Statusbar();
     bottleBar = new Bottlebar();
+    endBossBar = new Endbossbar();
     throwableObjects = [];
 
 
@@ -25,26 +25,26 @@ class World {
     }
 
     run() {
-        setInterval(() => {
+        setStopableInterval(() => {
             this.checkCollisions();
+            this.checkCollisionsBoss();
             this.checkThrowObjects();
-        }, 1000 / 20);
-        setInterval(() => {
             this.collectObjects();
-        }, 200);
+        }, 1000 / 20);
     }
 
     checkThrowObjects() {
-        if (this.keyboard.d || this.keyboard.f && this.keyboard.rightHold == true) {
+        if (this.keyboard.d && this.keyboard.rightHold == true) {
             this.character.throwAgain();
-            if (this.character.allowedToThrow === true) {
+            if (this.character.throwDelay === true) {
                 if (this.character.throwcheck() === true) {
+                    this.bottleCollision = true;
                     let bottle = new ThrowableObject(this.character.x, this.character.y);
                     this.throwableObjects.push(bottle);
                 }
                 this.character.throw();
                 this.bottleBar.setBottles(this.character.bottles);
-                this.character.allowedToThrow = false;
+                this.character.throwDelay = false;
             }
         }
     }
@@ -55,34 +55,70 @@ class World {
                 this.character.hit();
                 this.statusBar.setLife(this.character.energy);
             }
-
         });
-
+    }
+    checkCollisionsBoss() {
+        this.level.endboss.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                console.log('collsionendboss')
+                this.character.collidBoss();
+                this.statusBar.setLife(this.character.energy);
+            }
+        });
     }
 
-    bottleCollision(bottle) {
+    collidingBottleChicken(bottle) {
         this.level.enemies.forEach((enemy) => {
-            if (bottle.isColliding(enemy)) {
-                this.level.enemiesenemy.killingChicken();
+            if (bottle.isColliding(enemy) && this.bottleCollision == true) {
+                this.bottleCollision = false;
+                enemy.killChicken();
+                let i = this.level.enemies.indexOf(enemy);
+                setTimeout(() => {
+                    this.level.enemies.splice(i, 1);
+                }, 500);
+            }
+        })
+    }
+    collidingBottleBoss(bottle) {
+        this.level.endboss.forEach((enemy) => {
+            if (bottle.isColliding(enemy) && this.bottleCollision == true) {
+                enemy.hitAgain();
+                console.log(enemy.hitDelay)
+                if (enemy.hitDelay == true) {
+                    this.bottleCollision = false;
+                    enemy.hitBoss();
+                    this.endBossBar.setBossLife(enemy.bossEnergy);
+                }
+                enemy.hitDelay = false;
             }
         })
     }
 
+
     collectObjects() {
+        this.collectBottles();
+        this.collectCoins();
+
+    }
+    collectBottles() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.character.collectBottles();
                 let i = this.level.bottles.indexOf(bottle);
                 this.level.bottles.splice(i, 1);
-                this.bottleBar.setBottles(this.character.bottles);
+                this.bottleBar.setBottles(this.character.bottles);;
             }
         });
+    }
+
+    collectCoins() {
         this.level.coins.forEach(coin => {
             if (this.character.isColliding(coin)) {
                 this.character.collectCoins(coin);
                 let i = this.level.coins.indexOf(coin);
                 this.level.coins.splice(i, 1);
                 this.coinBar.setCoins(this.character.coins);
+                this.statusBar.setLife(this.character.energy);
             }
         });
     }
@@ -109,6 +145,7 @@ class World {
         this.addToMap(this.coinBar);
         this.addToMap(this.statusBar);
         this.addToMap(this.bottleBar);
+        this.addToMap(this.endBossBar);
 
         let self = this;
         requestAnimationFrame(function() {

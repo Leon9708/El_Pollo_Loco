@@ -6,7 +6,6 @@ class Level {
     bottles;
     coins;
     endboss;
-    chickenSmall;
 
     constructor(enemies, clouds, backgroundObjects, bottles, coins, endboss) {
         this.enemies = enemies;
@@ -15,8 +14,5 @@ class Level {
         this.bottles = bottles;
         this.coins = coins;
         this.endboss = endboss;
-
     }
-
-
 }

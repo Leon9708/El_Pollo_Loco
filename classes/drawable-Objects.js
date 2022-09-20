@@ -9,7 +9,8 @@ class DrawableObject {
     img;
     bottles = 5;
     coins = 0;
-
+    world;
+    otherDirection = false;
 
 
 
@@ -34,7 +35,6 @@ class DrawableObject {
 
     loadImages(arr) {
         arr.forEach((path) => {
-
             let img = new Image();
             img.src = path;
             this.imageCache[path] = img;

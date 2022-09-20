@@ -2,6 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let background = document.getElementById('background');
+let intervalIds = [];
 
 function render() {
     document.getElementById('background').classList.add('d-none');
@@ -13,22 +14,29 @@ function load() {
     let id = setInterval(frame, 25);
 
     function frame() {
-        if (width >= 100) {
-            clearInterval(id);
-            setTimeout(() => {
-                document.getElementById('background').classList.remove('d-none');
-                document.getElementById('boxBar').classList.add('d-none');
-            }, 400)
-        } else {
-            width++;
-            document.getElementById("progress").style.width = width + "%";
-            document.getElementById("progressNum").innerHTML = width + "%"
-        }
+        setTimeout(() => {
+
+            if (width >= 100) {
+                clearInterval(id);
+                setTimeout(() => {
+                    document.getElementById('background').classList.remove('d-none');
+                    document.getElementById('boxBar').classList.add('d-none');
+                }, 400)
+            } else {
+                width++;
+                document.getElementById("progress").style.width = width + "%";
+                document.getElementById("progressNum").innerHTML = width + "%"
+            }
+        }, 500);
     }
+
 }
 
+
 function gameInit() {
+    init();
     canvas = document.getElementById('canvas');
+    document.getElementById('gameover').classList.add('d-none');
     document.getElementById('background').classList.add('d-none');
     world = new World(canvas, keyboard);
     console.log('my character is', world.character);
@@ -56,8 +64,14 @@ function openOptions() {
     }
 }
 
+function setStopableInterval(fn, time) {
+    let idIntervall = setInterval(fn, time);
+    intervalIds.push(idIntervall);
+}
 
-
+function stopInterval() {
+    intervalIds.forEach(clearInterval);
+}
 window.addEventListener("keydown", (e) => {
     if (e.keyCode == 68) {
         keyboard.d = true;

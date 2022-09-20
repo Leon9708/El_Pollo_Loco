@@ -3,17 +3,18 @@ class MoveableObject extends DrawableObject {
     speedY = 0;
     accleration = 2.5;
     energy = 100;
+    bossEnergy = 100;
     lastHit = 0;
+    bossLastHit = 0;
     lastTime = 0;
-    allowedToThrow = false;
-    otherDirection = false;
-    gameOver = true;
-    world;
-
-
+    energyBoss = 100;
+    throwDelay = false;
+    hitDelay = false;
+    hitBossLastTime = 0;
+    i = 0
 
     applyGravity() {
-        setInterval(() => {
+        setStopableInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY
                 this.speedY -= this.accleration;
@@ -38,14 +39,12 @@ class MoveableObject extends DrawableObject {
     }
 
     playAnimationDead(images) {
-        let i = 0
-        if (i === images.length) {
-            this.loadImage(images[images.length])
-            this.gameOver = false;
+        if (this.i === images.length) {
+            this.loadImage(images[i]);
         } else {
-            let path = images[i];
+            let path = images[this.i];
             this.img = this.imageCache[path];
-            i++;
+            this.i++;
         }
     }
 
@@ -74,7 +73,15 @@ class MoveableObject extends DrawableObject {
     }
 
     hit() {
-        this.energy -= 4;
+        this.energy -= 7;
+        this.setHit();
+
+    }
+    collidBoss() {
+        this.energy -= 10;
+        this.setHit();
+    }
+    setHit() {
         if (this.energy <= 0) {
             this.energy = 0;
         } else {
@@ -97,7 +104,7 @@ class MoveableObject extends DrawableObject {
     throwAgain() {
         let now = new Date().getTime();
         if (now - this.lastTime >= 1000) {
-            this.allowedToThrow = true
+            this.throwDelay = true
             this.lastTime = now;
         }
     }
@@ -113,20 +120,57 @@ class MoveableObject extends DrawableObject {
         this.coins += 1;
         if (this.coins === 5) {
             this.coins = 0;
-            if (energy >= 1) {
-                this.energy += 20;
+            if (this.energy >= 1) {
+                this.energy += 15;
             }
         }
     }
 
+    hitBoss() {
+        this.bossEnergy -= 20;
+        if (this.bossEnergy <= 0) {
+            this.bossEnergy = 0;
+        } else {
+            this.bossLastHit = new Date().getTime();
+        }
+    }
+
+    hitAgain() {
+        let now = new Date().getTime();
+        if (now - this.hitBossLastTime >= 3000) {
+            this.hitDelay = true;
+            this.hitBossLastTime = now;
+        }
+    }
+
+
+    isHurt() {
+        let timepassed = new Date().getTime() - (this.lastHit);
+        timepassed = timepassed / 1000;
+        return timepassed < 1.5;
+    }
+
+    bossIsHurt() {
+        let timepassed = new Date().getTime() - this.bossLastHit;
+        timepassed = timepassed / 1000;
+        return timepassed < 1;
+    }
 
     isDead() {
         return this.energy === 0;
     }
 
-    isHurt() {
-        let timepassed = new Date().getTime() - this.lastHit;
-        timepassed = timepassed / 1000;
-        return timepassed < 1.5;
+    bossIsDead() {
+        return this.bossEnergy === 0;
+    }
+    bossJump() {
+        setTimeout(() => {
+            this.speedY = 25;
+            setInterval(() => {
+                if (this.isAboveGround()) {
+                    this.x -= this.speed
+                }
+            }, 100);
+        }, 1000);
     }
 }

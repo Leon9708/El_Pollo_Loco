@@ -18,16 +18,17 @@ class ThrowableObject extends MoveableObject {
         this.animate();
     }
 
-    throw (x, y) {
+    throw () {
         this.speedY = 23;
         this.applyGravity();
-        setInterval(() => {
+        setStopableInterval(() => {
             this.x += 6;
-            world.bottleCollision(this);
+            world.collidingBottleBoss(this);
+            world.collidingBottleChicken(this);
         }, 12)
     }
     animate() {
-        setInterval(() => {
+        setStopableInterval(() => {
             this.playAnimation(this.imagesBottle);
         }, 45);
 
