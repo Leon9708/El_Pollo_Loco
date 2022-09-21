@@ -42,7 +42,7 @@ class Endboss extends MoveableObject {
         this.loadImages(this.imagesDead);
         this.loadImages(this.imagesHurt);
         this.loadImages(this.imagesAttacking);
-        this.x = 1400;
+        this.x = 4400;
         this.animate();
         this.applyGravity();
     }

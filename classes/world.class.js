@@ -135,9 +135,7 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.ctx.translate(this.camera_x, 0);
-        this.addMovableObjects()
-        this.ctx.translate(-this.camera_x, 0);
+        this.addMovableObjects();
         this.addStaticObjects();
 
         let self = this;
@@ -147,17 +145,20 @@ class World {
     }
 
     addMovableObjects() {
+        this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
+        this.addToMap(this.character);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.throwableObjects);
+        this.ctx.translate(-this.camera_x, 0);
+
     }
 
     addStaticObjects() {
-        this.addToMap(this.character);
         this.addToMap(this.coinBar);
         this.addToMap(this.statusBar);
         this.addToMap(this.bottleBar);
@@ -169,6 +170,8 @@ class World {
             this.addToMap(o);
         });
     }
+
+
 
     addToMap(moveObj) {
         if (moveObj.otherDirection) {

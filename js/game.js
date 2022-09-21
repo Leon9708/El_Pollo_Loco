@@ -42,13 +42,10 @@ function gameInit() {
     console.log('my character is', world.character);
 }
 
-
 function music() {
     music_sound.loop = true;
     music_sound.play();
 }
-
-
 
 function enterFullscreen() {
     if (canvas.requestFullscreen) {
@@ -78,6 +75,7 @@ function setStopableInterval(fn, time) {
 function stopInterval() {
     intervalIds.forEach(clearInterval);
 }
+
 window.addEventListener("keydown", (e) => {
     if (e.keyCode == 68) {
         keyboard.d = true;

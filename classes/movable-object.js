@@ -76,7 +76,7 @@ class MoveableObject extends DrawableObject {
     }
 
     collidChicken() {
-        this.energy -= 0;
+        this.energy -= 4;
         this.world.audio.ouch_sound.play();
         this.setHit();
 
@@ -132,7 +132,7 @@ class MoveableObject extends DrawableObject {
     }
 
     hitBoss() {
-        this.bossEnergy -= 100;
+        this.bossEnergy -= 20;
         if (this.bossEnergy <= 0) {
             this.bossEnergy = 0;
         } else {
