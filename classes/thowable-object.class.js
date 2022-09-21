@@ -23,13 +23,13 @@ class ThrowableObject extends MoveableObject {
         this.applyGravity();
         if (world.character.otherDirection === true) {
             setStopableInterval(() => {
-                this.x -= 6;
+                this.x -= 5.5;
                 world.collidingBottleBoss(this);
                 world.collidingBottleChicken(this);
             }, 12)
         } else {
             setStopableInterval(() => {
-                this.x += 6;
+                this.x += 5.5;
                 world.collidingBottleBoss(this);
                 world.collidingBottleChicken(this);
             }, 12)

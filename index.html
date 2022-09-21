@@ -38,6 +38,43 @@
     <div id="background" class="container_startscreen d-none">
         <img src="img/img/9_intro_outro_screens/start/startscreen_2.png ">
         <button class="start_btn " onclick="gameInit()" class="start ">Start Game</button>
+        <button onclick="openOptionsStart()" class="options_start_btn ">
+            <img class="options_start_img " src="./img/img/icons/settings.png">
+        </button>
+    </div>
+    <div id="optionsStart" class="options_start d-none">
+        <button class="options_btn_back" onclick="openOptionsStart()">
+            <img class="options_start_img" src="./img/img/icons/back.png">
+        </button>
+        <div class="dropdown_options_start">
+            <h3 class="options_headtext_start">Options</h3>
+            <div class="place_container_start ">
+                <div class="box_options_start ">
+                    <img class="options_img " src="./img/img/icons/key_right.png">
+                    <p class="options_text ">Move Left</p>
+                </div>
+                <div class="box_options_start">
+                    <img class="options_img " src="./img/img/icons/key_left.png">
+                    <p class="options_text ">Move Right</p>
+                </div>
+                <div class="box_options_start ">
+                    <img class="options_img " src="./img/img/icons/key_space.png">
+                    <p class="options_text ">Jump</p>
+                </div>
+                <div class="box_options_start ">
+                    <img class="options_img " src="./img/img/icons/key_bottle.png">
+                    <p class="options_text ">Throw Bottle</p>
+                </div>
+            </div>
+            <div class="options_box_enemy">
+                <p class="options_enemy_text">5</p>
+                <p class="options_enemy_text options_enemy_text_2">x</p>
+                <img class="options_enemy_img" src="./img/img/6_salsa_bottle/salsa_bottle.png">
+                <p class="options_enemy_text options_enemy_equal">=</p>
+                <img class="options_enemy_img options_chicken_img " src="./img/img/4_enemie_boss_chicken/5_dead/G26.png">
+            </div>
+            <p class="options_enemy_text ">Beware: Every jump gets bigger !</p>
+        </div>
     </div>
     <div id="boxBar" class="box">
         <div class="bar ">
@@ -51,33 +88,33 @@
         <div class="container_canvas ">
             <div class="container_buttons ">
                 <button onclick="openOptions()" class="head_btn ">
-                    <img class="head_img " src="./img/img/icons/settings.png " alt=" ">
+                    <img class="head_img " src="./img/img/icons/settings.png">
                 </button>
-                <button id="fullScreen" onclick=" enterFullscreen() " class="head_btn ">
-                    <img class="head_img " src="./img/img/icons/fullscreen.png ">
+                <button id="fullScreen" onclick="enterFullscreen()" class="head_btn ">
+                    <img class="head_img " src="./img/img/icons/fullscreen.png">
                 </button>
             </div>
-            <div id="options" class="dropdown_options closed ">
+            <div id="options" class="dropdown_options d-none ">
                 <button onclick="openOptions()" class="head_options ">
-                    <img class="options_head_img " src="./img/img/icons/settings.png " alt=" ">
-                    <h3 class="options_headtext ">Options</h3>
+                    <img class="options_head_img " src="./img/img/icons/settings.png">
+                    <h3 class="options_headtext  ">Options</h3>
                 </button>
                 <div onclick="openOptions()" class="place_container ">
                     <div class="container_options ">
                         <div class="box_options ">
-                            <img class="options_img " src="./img/img/icons/key_left.png ">
+                            <img class="options_img " src="./img/img/icons/key_right.png">
                             <p class="options_text ">Move Left</p>
                         </div>
                         <div class="box_options">
-                            <img class="options_img " src="./img/img/icons/key_right.png ">
+                            <img class="options_img " src="./img/img/icons/key_left.png">
                             <p class="options_text ">Move Right</p>
                         </div>
                         <div class="box_options ">
-                            <img class="options_img " src="./img/img/icons/key_space.png ">
+                            <img class="options_img " src="./img/img/icons/key_space.png">
                             <p class="options_text ">Jump</p>
                         </div>
                         <div class="box_options ">
-                            <img class="options_img " src="./img/img/icons/key_bottle.png ">
+                            <img class="options_img " src="./img/img/icons/key_bottle.png">
                             <p class="options_text ">Throw Bottle</p>
                         </div>
                     </div>

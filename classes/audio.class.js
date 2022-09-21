@@ -9,13 +9,20 @@ class Audios extends MoveableObject {
     throw_sound = new Audio('audio/throw.mp3');
 
 
-
-
     setAudio() {
         this.win_cheer.muted = false;
         this.win_sound.muted = false;
         this.lost_melody.muted = false;
         this.lost_memo.muted = false;
+
+        this.win_cheer.volume = 0.5;
+        this.win_sound.volume = 0.5;
+        this.lost_melody.volume = 0.7;
+        this.lost_memo.volume = 0.7;
+        this.lifePlus_sound.volume = 0.4;
+        this.ouch_sound.volume = 0.4;
+        this.coin_sound.volume = 0.4;
+        this.throw_sound.volume = 0.4;
 
     }
 

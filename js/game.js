@@ -43,6 +43,7 @@ function gameInit() {
 }
 
 function music() {
+    music_sound.volume = 0.3;
     music_sound.loop = true;
     music_sound.play();
 }
@@ -57,13 +58,23 @@ function enterFullscreen() {
     }
 }
 
+function openOptionsStart() {
+    let optionsStart = document.getElementById('optionsStart');
+
+    if (optionsStart.classList.contains('d-none')) {
+        optionsStart.classList.remove('d-none');
+    } else {
+        optionsStart.classList.add('d-none');
+    }
+}
+
 function openOptions() {
     let options = document.getElementById('options');
 
-    if (options.classList.contains('closed')) {
-        options.classList.remove('closed');
+    if (options.classList.contains('d-none')) {
+        options.classList.remove('d-none');
     } else {
-        options.classList.add('closed');
+        options.classList.add('d-none');
     }
 }
 
