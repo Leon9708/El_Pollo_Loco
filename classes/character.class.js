@@ -50,6 +50,7 @@ class Character extends MoveableObject {
     ]
 
     walking_sound = new Audio('audio/running.mp3');
+    jump_sound = new Audio('audio/jump.mp3');
 
     constructor() {
         super().loadImage('img/img/2_character_pepe/1_idle/idle/I-1.png');
@@ -63,27 +64,43 @@ class Character extends MoveableObject {
 
     animate() {
         setStopableInterval(() => {
+            this.animateRight();
+            this.animateLeft();
+            this.animateJump();
             this.walking_sound.pause();
-            if (this.world.keyboard.right && this.x < this.world.level.levelEnd_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.walking_sound.play();
-            }
-            if (this.world.keyboard.left && this.x > parseFloat(-1250)) {
-                this.moveLeft();
-                this.otherDirection = true;
-                this.walking_sound.play();
-            }
-            if (this.world.keyboard.space && !this.isAboveGround()) {
-                this.jump();
-            }
-            this.world.camera_x = -this.x + 150;
+            this.world.camera_x = -this.x + 200;
         }, 1000 / 30);
+        this.renderImages();
+    }
+
+    animateRight() {
+        if (this.world.keyboard.right && this.x < this.world.level.levelEnd_x) {
+            this.moveRight();
+            this.otherDirection = false;
+            this.walking_sound.play();
+
+        }
+    }
+
+    animateLeft() {
+        if (this.world.keyboard.left && this.x > parseFloat(-1250)) {
+            this.moveLeft();
+            this.otherDirection = true;
+            this.walking_sound.play();
+        }
+    }
+
+    animateJump() {
+        if (this.world.keyboard.space && !this.isAboveGround()) {
+            this.jump();
+            this.jump_sound.play();
+        }
+    }
+
+    renderImages() {
         setStopableInterval(() => {
             if (this.isDead()) {
-                this.playAnimationDead(this.imagesDead);
-                this.gameOverScreen();
-                stopInterval();
+                this.endGameLose()
             } else if (this.isHurt()) {
                 this.playAnimation(this.imagesHurt);
             } else if (this.isAboveGround()) {
@@ -93,14 +110,10 @@ class Character extends MoveableObject {
             }
         }, 75)
     }
-    gameOverScreen() {
-        setTimeout(() => {
-            document.getElementById('gameover').classList.remove('d-none')
-        }, 1000);
-        setTimeout(() => {
-            document.getElementById('background').classList.remove('d-none');
-        }, 5000);
+    endGameLose() {
+        this.playAnimationDead(this.imagesDead);
+        this.world.audio.lost_melody.play();
+        this.world.audio.lost_memo.play();
+        this.gameOverScreen();
     }
-
-
 }

@@ -8,10 +8,13 @@ class MoveableObject extends DrawableObject {
     bossLastHit = 0;
     lastTime = 0;
     energyBoss = 100;
+    hitBossLastTime = 0;
+    i = 0;
+    win = false;
     throwDelay = false;
     hitDelay = false;
-    hitBossLastTime = 0;
-    i = 0
+    chickenDead = false;
+
 
     applyGravity() {
         setStopableInterval(() => {
@@ -40,7 +43,7 @@ class MoveableObject extends DrawableObject {
 
     playAnimationDead(images) {
         if (this.i === images.length) {
-            this.loadImage(images[i]);
+            this.loadImage(images[this.i]);
         } else {
             let path = images[this.i];
             this.img = this.imageCache[path];
@@ -72,13 +75,14 @@ class MoveableObject extends DrawableObject {
             this.y < obj.y + obj.height
     }
 
-    hit() {
-        this.energy -= 7;
+    collidChicken() {
+        this.energy -= 0;
+        this.world.audio.ouch_sound.play();
         this.setHit();
 
     }
     collidBoss() {
-        this.energy -= 10;
+        this.energy -= 100;
         this.setHit();
     }
     setHit() {
@@ -96,7 +100,7 @@ class MoveableObject extends DrawableObject {
         }
     }
 
-    throwcheck() {
+    bottleLeft() {
         if (this.bottles >= 1)
             return true;
     }
@@ -121,13 +125,14 @@ class MoveableObject extends DrawableObject {
         if (this.coins === 5) {
             this.coins = 0;
             if (this.energy >= 1) {
+                this.world.audio.lifePlus_sound.play();
                 this.energy += 15;
             }
         }
     }
 
     hitBoss() {
-        this.bossEnergy -= 20;
+        this.bossEnergy -= 100;
         if (this.bossEnergy <= 0) {
             this.bossEnergy = 0;
         } else {
@@ -165,12 +170,33 @@ class MoveableObject extends DrawableObject {
     }
     bossJump() {
         setTimeout(() => {
-            this.speedY = 25;
+            this.speedY = 27.5;
             setInterval(() => {
                 if (this.isAboveGround()) {
                     this.x -= this.speed
                 }
-            }, 100);
+            }, 50);
         }, 1000);
     }
+
+
+    gameOverScreen() {
+        stopInterval();
+        music_sound.pause();
+        setTimeout(() => {
+            if (this.win === true) {
+                document.getElementById('gameover_win').classList.remove('d-none');
+            } else {
+                document.getElementById('gameover_lose').classList.remove('d-none');
+            }
+        }, 1000);
+        setTimeout(() => {
+            document.getElementById('background').classList.remove('d-none');
+            this.world.audio.resetAudio();
+        }, 7500);
+
+    }
+
+
+
 }

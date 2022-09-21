@@ -2,6 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let background = document.getElementById('background');
+let music_sound = new Audio('audio/music.mp3');
 let intervalIds = [];
 
 function render() {
@@ -15,7 +16,6 @@ function load() {
 
     function frame() {
         setTimeout(() => {
-
             if (width >= 100) {
                 clearInterval(id);
                 setTimeout(() => {
@@ -29,17 +29,23 @@ function load() {
             }
         }, 500);
     }
-
 }
-
 
 function gameInit() {
     init();
+    music();
     canvas = document.getElementById('canvas');
-    document.getElementById('gameover').classList.add('d-none');
+    document.getElementById('gameover_lose').classList.add('d-none');
+    document.getElementById('gameover_win').classList.add('d-none');
     document.getElementById('background').classList.add('d-none');
     world = new World(canvas, keyboard);
     console.log('my character is', world.character);
+}
+
+
+function music() {
+    music_sound.loop = true;
+    music_sound.play();
 }
 
 

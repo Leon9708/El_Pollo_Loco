@@ -21,11 +21,21 @@ class ThrowableObject extends MoveableObject {
     throw () {
         this.speedY = 23;
         this.applyGravity();
-        setStopableInterval(() => {
-            this.x += 6;
-            world.collidingBottleBoss(this);
-            world.collidingBottleChicken(this);
-        }, 12)
+        if (world.character.otherDirection === true) {
+            setStopableInterval(() => {
+                this.x -= 6;
+                world.collidingBottleBoss(this);
+                world.collidingBottleChicken(this);
+            }, 12)
+        } else {
+            setStopableInterval(() => {
+                this.x += 6;
+                world.collidingBottleBoss(this);
+                world.collidingBottleChicken(this);
+            }, 12)
+        }
+
+
     }
     animate() {
         setStopableInterval(() => {

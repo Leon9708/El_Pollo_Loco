@@ -24,6 +24,7 @@ function init() {
             new ChickenSmall(),
             new ChickenSmall(),
             new ChickenSmall()
+
         ], [
             new cloud()
         ], [
