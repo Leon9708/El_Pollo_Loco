@@ -2,6 +2,7 @@ class DrawableObject {
     x = 129;
     y = 280;
 
+
     height = 150;
     width = 100;
     imageCache = {};
@@ -17,6 +18,8 @@ class DrawableObject {
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
+
+
 
     loadImage(path) {
         this.img = new Image();

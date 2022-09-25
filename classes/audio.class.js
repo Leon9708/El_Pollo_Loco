@@ -17,12 +17,12 @@ class Audios extends MoveableObject {
 
         this.win_cheer.volume = 0.5;
         this.win_sound.volume = 0.5;
-        this.lost_melody.volume = 0.7;
-        this.lost_memo.volume = 0.7;
+        this.lost_melody.volume = 0.6;
+        this.lost_memo.volume = 0.6;
         this.lifePlus_sound.volume = 0.4;
         this.ouch_sound.volume = 0.4;
         this.coin_sound.volume = 0.4;
-        this.throw_sound.volume = 0.4;
+        this.throw_sound.volume = 0.2;
 
     }
 
@@ -39,8 +39,5 @@ class Audios extends MoveableObject {
 
     }
 
-    win() {
-        this.win_sound.play();
-        this.win_cheer.play();
-    }
+
 }

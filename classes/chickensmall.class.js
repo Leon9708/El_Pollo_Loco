@@ -14,9 +14,9 @@ class ChickenSmall extends MoveableObject {
 
     constructor() {
         super().loadImage('img/img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
-        this.x = 500 + Math.random() * 2500;
+        this.x = 400 + Math.random() * 2400;
         this.loadImages(this.imagesWalking);
-        this.speed -= 0.15 + Math.random() * 0.75;
+        this.speed -= 0.15 + Math.random() * 0.9;
         this.animate();
         this.moveLeft();
     }

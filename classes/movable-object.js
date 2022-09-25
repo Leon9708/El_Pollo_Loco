@@ -14,6 +14,14 @@ class MoveableObject extends DrawableObject {
     throwDelay = false;
     hitDelay = false;
     chickenDead = false;
+    collidingOffset = {
+        'top': 0,
+        'right': 0,
+        'bottom': 0,
+        'left': 0,
+    }
+
+
 
 
     applyGravity() {
@@ -69,14 +77,15 @@ class MoveableObject extends DrawableObject {
     }
 
     isColliding(obj) {
-        return this.x + this.width > obj.x &&
-            this.y + this.height > obj.y &&
-            this.x < obj.x &&
-            this.y < obj.y + obj.height
+        return (this.x + this.width - this.collidingOffset.right) >= obj.x &&
+            (this.y + this.height - this.collidingOffset.bottom) >= obj.y &&
+            (this.x + this.collidingOffset.left) <= (obj.x + obj.width) &&
+            (this.y + this.collidingOffset.top) <= (obj.y + obj.height)
+
     }
 
     collidChicken() {
-        this.energy -= 4;
+        this.energy -= 5;
         this.world.audio.ouch_sound.play();
         this.setHit();
 
@@ -182,6 +191,7 @@ class MoveableObject extends DrawableObject {
 
     gameOverScreen() {
         stopInterval();
+        this.walking_sound.pause();
         music_sound.pause();
         setTimeout(() => {
             if (this.win === true) {

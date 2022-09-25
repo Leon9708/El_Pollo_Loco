@@ -2,7 +2,8 @@ class Endboss extends MoveableObject {
     height = 290;
     width = 175;
     y = 80;
-    speed = 11;
+    speed = 15;
+
 
     imagesAlert = [
         'img/img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -70,7 +71,8 @@ class Endboss extends MoveableObject {
     endGameWin() {
         this.playAnimationDead(this.imagesDead);
         this.win = true;
-        this.world.audio.win();
+        this.world.audio.win_sound.play();
+        this.world.audio.win_cheer.play();
         this.gameOverScreen();
     }
 

@@ -1,5 +1,11 @@
 class ThrowableObject extends MoveableObject {
 
+    collidingOffset = {
+        'top': 65,
+        'right': 45,
+        'bottom': 0,
+        'left': 45,
+    }
     imagesBottle = [
         'img/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -21,6 +27,7 @@ class ThrowableObject extends MoveableObject {
     throw () {
         this.speedY = 23;
         this.applyGravity();
+
         if (world.character.otherDirection === true) {
             setStopableInterval(() => {
                 this.x -= 5.5;

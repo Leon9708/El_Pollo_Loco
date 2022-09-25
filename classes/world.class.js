@@ -76,6 +76,7 @@ class World {
             if (bottle.isColliding(enemy) && this.bottleCollision == true) {
                 this.bottleCollision = false;
                 enemy.killChicken();
+                this.throwableObjects.splice(bottle);
                 let i = this.level.enemies.indexOf(enemy);
                 setTimeout(() => {
                     this.level.enemies.splice(i, 1);
@@ -87,8 +88,8 @@ class World {
         this.level.endboss.forEach((enemy) => {
             if (bottle.isColliding(enemy) && this.bottleCollision == true) {
                 enemy.hitAgain();
-                console.log(enemy.hitDelay)
                 if (enemy.hitDelay == true) {
+                    this.throwableObjects.splice(bottle);
                     this.bottleCollision = false;
                     enemy.hitBoss();
                     this.endBossBar.setBossLife(enemy.bossEnergy);
@@ -178,6 +179,7 @@ class World {
             this.flipImage(moveObj);
         }
         moveObj.draw(this.ctx);
+
 
         if (moveObj.otherDirection) {
             this.flipImageBack(moveObj);

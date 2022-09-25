@@ -35,99 +35,122 @@
 </head>
 
 <body onload="render()">
-    <div id="background" class="container_startscreen d-none">
-        <img src="img/img/9_intro_outro_screens/start/startscreen_2.png ">
-        <button class="start_btn " onclick="gameInit()" class="start ">Start Game</button>
-        <button onclick="openOptionsStart()" class="options_start_btn ">
-            <img class="options_start_img " src="./img/img/icons/settings.png">
-        </button>
-    </div>
-    <div id="optionsStart" class="options_start d-none">
-        <button class="options_btn_back" onclick="openOptionsStart()">
-            <img class="options_start_img" src="./img/img/icons/back.png">
-        </button>
-        <div class="dropdown_options_start">
+    <h1 class="headtext ">El Pollo Loco</h1>
+    <main>
+        <canvas id="canvas" width="720" height="480"></canvas>
+        <div id="background" class="container_startscreen d-none">
+            <img src="img/img/9_intro_outro_screens/start/startscreen_2.png ">
+            <button class="start_btn" onclick="gameInit()" class="start ">Start Game</button>
+            <button onclick="openOptionsStart()" class="options_start_btn ">
+                <img class="options_start_img" src="./img/img/icons/settings.png">
+            </button>
+        </div>
+        <div id="optionsStart" class="options_start d-none">
+            <button class="options_btn_back" onclick="openOptionsStart()">
+                 <img class="options_start_img" src="./img/img/icons/back.png">
+            </button>
             <h3 class="options_headtext_start">Options</h3>
-            <div class="place_container_start ">
-                <div class="box_options_start ">
-                    <img class="options_img " src="./img/img/icons/key_right.png">
-                    <p class="options_text ">Move Left</p>
+            <div class="dropdown_options_start">
+                <div class="place_container_start">
+                    <div class="box_options_start">
+                        <img class="options_img des " src="./img/img/icons/key_right.png">
+                        <img class="options_start_img res turn_180" src="img/img/icons/btn_move_res.png">
+                        <p class="options_text ">Move Left</p>
+                    </div>
+                    <div class="box_options_start">
+                        <img class="options_img des " src="./img/img/icons/key_left.png">
+                        <img class="options_start_img res" src="img/img/icons/btn_move_res.png">
+                        <p class="options_text ">Move Right</p>
+                    </div>
+                    <div class="box_options_start ">
+                        <img class="options_img des " src="./img/img/icons/key_space.png">
+                        <img class="options_start_img res " src="img/img/icons/jump_res.png">
+                        <p class="options_text ">Jump</p>
+                    </div>
+                    <div class="box_options_start ">
+                        <img class="options_img des" src="./img/img/icons/key_bottle.png">
+                        <img class="options_start_img res" src="img/img/6_salsa_bottle/salsa_bottle.png">
+                        <p class="options_text ">Throw Bottle</p>
+                    </div>
                 </div>
-                <div class="box_options_start">
-                    <img class="options_img " src="./img/img/icons/key_left.png">
-                    <p class="options_text ">Move Right</p>
+                <div class="options_box_enemy">
+                    <p class="options_enemy_text">5</p>
+                    <p class="options_enemy_text options_enemy_text_2">x</p>
+                    <img class="options_enemy_img" src="./img/img/6_salsa_bottle/salsa_bottle.png">
+                    <p class="options_enemy_text options_enemy_equal">=</p>
+                    <img class="options_enemy_img options_chicken_img " src="./img/img/4_enemie_boss_chicken/5_dead/G26.png">
                 </div>
-                <div class="box_options_start ">
-                    <img class="options_img " src="./img/img/icons/key_space.png">
-                    <p class="options_text ">Jump</p>
-                </div>
-                <div class="box_options_start ">
-                    <img class="options_img " src="./img/img/icons/key_bottle.png">
-                    <p class="options_text ">Throw Bottle</p>
-                </div>
+                <p class="options_enemy_text ">Beware: Every jump gets bigger !</p>
             </div>
-            <div class="options_box_enemy">
-                <p class="options_enemy_text">5</p>
-                <p class="options_enemy_text options_enemy_text_2">x</p>
-                <img class="options_enemy_img" src="./img/img/6_salsa_bottle/salsa_bottle.png">
-                <p class="options_enemy_text options_enemy_equal">=</p>
-                <img class="options_enemy_img options_chicken_img " src="./img/img/4_enemie_boss_chicken/5_dead/G26.png">
+        </div>
+        <div id="boxBar" class="box">
+            <div class="bar ">
+                <div id="progress" class="progress "></div>
+                <p id="progressNum" class="progress_num ">0%</p>
             </div>
-            <p class="options_enemy_text ">Beware: Every jump gets bigger !</p>
         </div>
-    </div>
-    <div id="boxBar" class="box">
-        <div class="bar ">
-            <div id="progress" class="progress "></div>
-            <p id="progressNum" class="progress_num ">0%</p>
-        </div>
-    </div>
-    <div class="game">
-        <h1 class="headtext ">El Pollo Loco</h1>
-        <canvas id="canvas" width="720 " height="480 "></canvas>
         <div class="container_canvas ">
             <div class="container_buttons ">
+                <button id="btnMute" class="head_btn_sound head_btn" onclick="mute()">
+                    <img id="imgSound" src="img/img/icons/unmute.png">
+                </button>
                 <button onclick="openOptions()" class="head_btn ">
                     <img class="head_img " src="./img/img/icons/settings.png">
-                </button>
+                        </button>
                 <button id="fullScreen" onclick="enterFullscreen()" class="head_btn ">
                     <img class="head_img " src="./img/img/icons/fullscreen.png">
                 </button>
             </div>
             <div id="options" class="dropdown_options d-none ">
                 <button onclick="openOptions()" class="head_options ">
-                    <img class="options_head_img " src="./img/img/icons/settings.png">
-                    <h3 class="options_headtext  ">Options</h3>
-                </button>
+                            <img class="options_head_img " src="./img/img/icons/settings.png">
+                            <h3 class="options_headtext  ">Options</h3>
+                        </button>
                 <div onclick="openOptions()" class="place_container ">
                     <div class="container_options ">
                         <div class="box_options ">
-                            <img class="options_img " src="./img/img/icons/key_right.png">
+                            <img class="options_img des " src="./img/img/icons/key_right.png">
+                            <img class="options_start_img res turn_180" src="img/img/icons/btn_move_res.png">
                             <p class="options_text ">Move Left</p>
                         </div>
                         <div class="box_options">
-                            <img class="options_img " src="./img/img/icons/key_left.png">
+                            <img class="options_img des " src="./img/img/icons/key_left.png">
+                            <img class="options_start_img res" src="img/img/icons/btn_move_res.png">
                             <p class="options_text ">Move Right</p>
                         </div>
                         <div class="box_options ">
-                            <img class="options_img " src="./img/img/icons/key_space.png">
+                            <img class="options_img des " src="./img/img/icons/key_space.png">
+                            <img class="options_start_img res " src="img/img/icons/jump_res.png">
                             <p class="options_text ">Jump</p>
                         </div>
                         <div class="box_options ">
-                            <img class="options_img " src="./img/img/icons/key_bottle.png">
+                            <img class="options_img des " src="./img/img/icons/key_bottle.png">
+                            <img class="img_bottle_res res" src="img/img/6_salsa_bottle/salsa_bottle.png" alt="">
                             <p class="options_text ">Throw Bottle</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="gameover_lose" class="gameover d-none">
-        <img class="gameover_img" src="./img/img/9_intro_outro_screens/game_over/oh no you lost!.png">
-    </div>
-    <div id="gameover_win" class="gameover d-none">
-        <img class="gameover_img" src="img/img/9_intro_outro_screens/game_over/game over.png">
-    </div>
+        <div id="gameover_lose" class="gameover d-none">
+            <img class="gameover_img" src="./img/img/9_intro_outro_screens/game_over/oh no you lost!.png">
+        </div>
+        <div id="gameover_win" class="gameover d-none">
+            <img class="gameover_img" src="img/img/9_intro_outro_screens/game_over/game over.png">
+        </div>
+        <button id="btnLeft" class="btn_left btn_res">
+            <img class="img_move_res turn_180" src="img/img/icons/btn_move_res.png">
+        </button>
+        <button id="btnRight" class="btn_right btn_res">
+            <img class="img_move_res" src="img/img/icons/btn_move_res.png">
+        </button>
+        <button id="btnJump" class="btn_jump btn_res">
+            <img class="img_move_res" src="img/img/icons/jump_res.png">
+        </button>
+        <button id="btnThrow" class="btn_throw btn_res">
+            <img class="img_bottle_res" src="img/img/6_salsa_bottle/salsa_bottle.png">
+        </button>
+    </main>
 </body>
 
 </html>
