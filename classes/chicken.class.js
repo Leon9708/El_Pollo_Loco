@@ -4,6 +4,7 @@ class Chicken extends MoveableObject {
     width = 85;
     y = 365;
     chickenDead = false;
+    world;
 
 
     imagesWalking = [
@@ -35,10 +36,10 @@ class Chicken extends MoveableObject {
         }, 100)
 
     }
-
     killChicken() {
         this.chickenDead = true;
         this.speed = 0;
     }
+
 
 }

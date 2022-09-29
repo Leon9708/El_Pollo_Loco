@@ -8,6 +8,7 @@ class World {
     camera_x = 0;
     bottleCollision;
     currentTime;
+    win = false;
     coinBar = new Coinbar();
     statusBar = new Statusbar();
     bottleBar = new Bottlebar();
@@ -40,7 +41,7 @@ class World {
         if (this.keyboard.d) {
             this.character.throwAgain();
             if (this.character.throwDelay === true) {
-                if (this.character.bottleLeft() === true) {
+                if (this.bottleBar.bottleLeft() === true) {
                     this.audio.throw_sound.play();
                     this.bottleCollision = true;
                     let bottle = new ThrowableObject(this.character.x, this.character.y);
@@ -64,7 +65,6 @@ class World {
     checkCollisionsBoss() {
         this.level.endboss.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                console.log('collsionendboss')
                 this.character.collidBoss();
                 this.statusBar.setLife(this.character.energy);
             }
@@ -92,7 +92,7 @@ class World {
                     this.throwableObjects.splice(bottle);
                     this.bottleCollision = false;
                     enemy.hitBoss();
-                    this.endBossBar.setBossLife(enemy.bossEnergy);
+                    this.endBossBar.setBossLife(enemy.energy);
                 }
                 enemy.hitDelay = false;
             }
@@ -111,7 +111,7 @@ class World {
                 this.character.collectBottles();
                 let i = this.level.bottles.indexOf(bottle);
                 this.level.bottles.splice(i, 1);
-                this.bottleBar.setBottles(this.character.bottles);;
+                this.bottleBar.setBottles(this.character.bottles);
             }
         });
     }
@@ -196,5 +196,37 @@ class World {
     flipImageBack(moveObj) {
         moveObj.x = moveObj.x * -1;
         this.ctx.restore();
+    }
+
+    gameOverScreen() {
+        stopInterval();
+        music_sound.pause();
+        setTimeout(() => {
+            if (this.win === true) {
+                document.getElementById('gameover_win').classList.remove('d-none');
+            } else {
+                document.getElementById('gameover_lose').classList.remove('d-none');
+            }
+        }, 1000);
+        setTimeout(() => {
+            document.getElementById('background').classList.remove('d-none');
+            this.audio.resetAudio();
+        }, 7500);
+
+    }
+
+    endGameWin() {
+        this.level.endboss.playAnimationDead(this.level.endboss.imagesDead);
+        this.win = true;
+        this.audio.win_sound.play();
+        this.audio.win_cheer.play();
+        this.gameOverScreen();
+    }
+
+    endGameLose() {
+        this.character.playAnimationDead(this.character.imagesDead);
+        this.audio.lost_melody.play();
+        this.audio.lost_memo.play();
+        this.gameOverScreen();
     }
 }

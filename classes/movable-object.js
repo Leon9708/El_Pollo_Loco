@@ -2,15 +2,9 @@ class MoveableObject extends DrawableObject {
     speed = 0.15;
     speedY = 0;
     accleration = 2.5;
-    energy = 100;
-    bossEnergy = 100;
-    lastHit = 0;
-    bossLastHit = 0;
     lastTime = 0;
-    energyBoss = 100;
     hitBossLastTime = 0;
     i = 0;
-    win = false;
     throwDelay = false;
     hitDelay = false;
     chickenDead = false;
@@ -20,9 +14,6 @@ class MoveableObject extends DrawableObject {
         'bottom': 0,
         'left': 0,
     }
-
-
-
 
     applyGravity() {
         setStopableInterval(() => {
@@ -81,24 +72,13 @@ class MoveableObject extends DrawableObject {
             (this.y + this.height - this.collidingOffset.bottom) >= obj.y &&
             (this.x + this.collidingOffset.left) <= (obj.x + obj.width) &&
             (this.y + this.collidingOffset.top) <= (obj.y + obj.height)
-
     }
 
-    collidChicken() {
-        this.energy -= 5;
-        this.world.audio.ouch_sound.play();
-        this.setHit();
-
-    }
-    collidBoss() {
-        this.energy -= 100;
-        this.setHit();
-    }
-    setHit() {
-        if (this.energy <= 0) {
-            this.energy = 0;
+    setHit(energy) {
+        if (energy <= 0) {
+            world.character.energy = 0;
         } else {
-            this.lastHit = new Date().getTime();
+            world.character.lastHit = new Date().getTime();
         }
     }
 
@@ -109,11 +89,6 @@ class MoveableObject extends DrawableObject {
         }
     }
 
-    bottleLeft() {
-        if (this.bottles >= 1)
-            return true;
-    }
-
     throwAgain() {
         let now = new Date().getTime();
         if (now - this.lastTime >= 1000) {
@@ -121,7 +96,6 @@ class MoveableObject extends DrawableObject {
             this.lastTime = now;
         }
     }
-
 
     collectBottles() {
         this.bottles += 1;
@@ -133,19 +107,10 @@ class MoveableObject extends DrawableObject {
         this.coins += 1;
         if (this.coins === 5) {
             this.coins = 0;
-            if (this.energy >= 1) {
+            if (this.world.character.energy >= 1) {
                 this.world.audio.lifePlus_sound.play();
-                this.energy += 15;
+                this.world.character.energy += 15;
             }
-        }
-    }
-
-    hitBoss() {
-        this.bossEnergy -= 20;
-        if (this.bossEnergy <= 0) {
-            this.bossEnergy = 0;
-        } else {
-            this.bossLastHit = new Date().getTime();
         }
     }
 
@@ -157,56 +122,14 @@ class MoveableObject extends DrawableObject {
         }
     }
 
-
-    isHurt() {
-        let timepassed = new Date().getTime() - (this.lastHit);
-        timepassed = timepassed / 1000;
-        return timepassed < 1.5;
-    }
-
-    bossIsHurt() {
-        let timepassed = new Date().getTime() - this.bossLastHit;
+    isHurt(lastHit) {
+        let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
         return timepassed < 1;
     }
 
-    isDead() {
-        return this.energy === 0;
+    isDead(energy) {
+        return energy === 0;
     }
-
-    bossIsDead() {
-        return this.bossEnergy === 0;
-    }
-    bossJump() {
-        setTimeout(() => {
-            this.speedY = 27.5;
-            setInterval(() => {
-                if (this.isAboveGround()) {
-                    this.x -= this.speed
-                }
-            }, 50);
-        }, 1000);
-    }
-
-
-    gameOverScreen() {
-        stopInterval();
-        this.walking_sound.pause();
-        music_sound.pause();
-        setTimeout(() => {
-            if (this.win === true) {
-                document.getElementById('gameover_win').classList.remove('d-none');
-            } else {
-                document.getElementById('gameover_lose').classList.remove('d-none');
-            }
-        }, 1000);
-        setTimeout(() => {
-            document.getElementById('background').classList.remove('d-none');
-            this.world.audio.resetAudio();
-        }, 7500);
-
-    }
-
-
 
 }

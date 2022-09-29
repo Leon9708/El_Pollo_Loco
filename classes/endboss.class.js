@@ -2,9 +2,10 @@ class Endboss extends MoveableObject {
     height = 290;
     width = 175;
     y = 80;
-    speed = 15;
-
-
+    speed = 15
+    lastHit = 0;
+    energy = 100;
+    world;
     imagesAlert = [
         'img/img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -51,14 +52,14 @@ class Endboss extends MoveableObject {
 
     animate() {
         setStopableInterval(() => {
-            if (this.bossIsHurt()) {
+            if (this.isHurt(this.lastHit)) {
                 this.bossJump();
             }
         }, 1000);
         setStopableInterval(() => {
-            if (this.bossIsDead()) {
-                this.endGameWin();
-            } else if (this.bossIsHurt()) {
+            if (this.isDead(this.energy)) {
+                world.endGameWin();
+            } else if (this.isHurt(this.lastHit)) {
                 this.playAnimation(this.imagesHurt);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.imagesAttacking);
@@ -68,13 +69,28 @@ class Endboss extends MoveableObject {
         }, 200)
     }
 
-    endGameWin() {
-        this.playAnimationDead(this.imagesDead);
-        this.win = true;
-        this.world.audio.win_sound.play();
-        this.world.audio.win_cheer.play();
-        this.gameOverScreen();
+
+
+    bossJump() {
+        setTimeout(() => {
+            this.speedY = 27.5;
+            setInterval(() => {
+                if (this.isAboveGround()) {
+                    this.x -= this.speed
+                }
+            }, 50);
+        }, 1000);
     }
+
+    hitBoss() {
+        this.energy -= 20;
+        if (this.energy <= 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
 
 
 }

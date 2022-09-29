@@ -42,4 +42,10 @@ class Bottlebar extends DrawableObject {
             return 0
         }
     }
+
+    bottleLeft() {
+        if (this.bottles >= 1)
+            return true;
+    }
+
 }

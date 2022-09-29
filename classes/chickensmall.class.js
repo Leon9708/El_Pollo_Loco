@@ -4,6 +4,7 @@ class ChickenSmall extends MoveableObject {
     width = 55;
     y = 395;
     otherDirection = true;
+    world;
     imagesWalking = [
         'img/img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
         'img/img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
@@ -37,4 +38,5 @@ class ChickenSmall extends MoveableObject {
         this.chickenDead = true;
         this.speed = 0;
     }
+
 }

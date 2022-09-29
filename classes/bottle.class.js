@@ -17,4 +17,5 @@ class bottle extends MoveableObject {
         this.loadImage(selectImage);
     }
 
+
 }

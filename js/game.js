@@ -46,7 +46,7 @@ function gameInit() {
 }
 
 function music() {
-    music_sound.volume = 0.3;
+    music_sound.volume = 0.2;
     music_sound.loop = true;
     music_sound.play();
 }

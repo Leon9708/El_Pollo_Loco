@@ -15,14 +15,14 @@ class Audios extends MoveableObject {
         this.lost_melody.muted = false;
         this.lost_memo.muted = false;
 
-        this.win_cheer.volume = 0.5;
-        this.win_sound.volume = 0.5;
-        this.lost_melody.volume = 0.6;
-        this.lost_memo.volume = 0.6;
-        this.lifePlus_sound.volume = 0.4;
-        this.ouch_sound.volume = 0.4;
-        this.coin_sound.volume = 0.4;
-        this.throw_sound.volume = 0.2;
+        this.win_cheer.volume = 0.3;
+        this.win_sound.volume = 0.3;
+        this.lost_melody.volume = 0.5;
+        this.lost_memo.volume = 0.5;
+        this.lifePlus_sound.volume = 0.3;
+        this.ouch_sound.volume = 0.25;
+        this.coin_sound.volume = 0.3;
+        this.throw_sound.volume = 0.15;
 
     }
 

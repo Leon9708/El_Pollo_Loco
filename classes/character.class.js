@@ -8,7 +8,8 @@ class Character extends MoveableObject {
         'bottom': 40,
         'left': 30,
     }
-
+    lastHit = 0;
+    energy = 100;
     imagesWalking = ['img/img/2_character_pepe/2_walk/W-21.png',
         'img/img/2_character_pepe/2_walk/W-22.png',
         'img/img/2_character_pepe/2_walk/W-23.png',
@@ -64,7 +65,7 @@ class Character extends MoveableObject {
         this.loadImages(this.imagesJumping);
         this.loadImages(this.imagesDead);
         this.loadImages(this.imagesHurt);
-        this.loadImages(this.imageIdle)
+        this.loadImages(this.imageIdle);
         this.animate();
         this.applyGravity();
     }
@@ -110,9 +111,10 @@ class Character extends MoveableObject {
     }
     renderImages() {
         setStopableInterval(() => {
-            if (this.isDead()) {
-                this.endGameLose()
-            } else if (this.isHurt()) {
+            if (this.isDead(this.energy)) {
+                world.endGameLose();
+                this.walking_sound.pause();
+            } else if (this.isHurt(this.lastHit)) {
                 this.playAnimation(this.imagesHurt);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.imagesJumping);
@@ -123,10 +125,15 @@ class Character extends MoveableObject {
             }
         }, 75)
     }
-    endGameLose() {
-        this.playAnimationDead(this.imagesDead);
-        this.world.audio.lost_melody.play();
-        this.world.audio.lost_memo.play();
-        this.gameOverScreen();
+
+    collidBoss() {
+        this.energy = 0;
+        this.setHit(this.energy);
     }
+    collidChicken() {
+        this.energy -= 7;
+        world.audio.ouch_sound.play();
+        this.setHit(this.energy);
+    }
+
 }
