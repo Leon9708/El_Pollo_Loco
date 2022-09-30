@@ -37,12 +37,16 @@ function gameInit() {
     music();
     btnsPressEvents();
     keysPressEvents();
+    hideMenus();
     canvas = document.getElementById('canvas');
+    document.getElementById("imgSound").src = imgSound.src.replace("img/img/icons/mute.png", "img/img/icons/unmute.png");
+    world = new World(canvas, keyboard);
+}
+
+function hideMenus() {
     document.getElementById('gameover_lose').classList.add('d-none');
     document.getElementById('gameover_win').classList.add('d-none');
     document.getElementById('background').classList.add('d-none');
-    world = new World(canvas, keyboard);
-    console.log('my character is', world.character);
 }
 
 function music() {
@@ -118,38 +122,38 @@ function showBtnsRes() {
 
 function btnsPressEvents() {
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
         keyboard.left = true;
     });
     document.getElementById('btnLeft').addEventListener('touchend', (e) => {
-
+        if (e.cancelable) e.preventDefault();
         keyboard.left = false;
     });
     document.getElementById('btnRight').addEventListener('touchstart', (e) => {
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
         keyboard.right = true;
     });
 
     document.getElementById('btnRight').addEventListener('touchend', (e) => {
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
         keyboard.right = false;
     });
     document.getElementById('btnJump').addEventListener('touchstart', (e) => {
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
         keyboard.space = true;
     });
 
     document.getElementById('btnJump').addEventListener('touchend', (e) => {
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
         keyboard.space = false;
     });
     document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
         keyboard.d = true;
     });
 
     document.getElementById('btnThrow').addEventListener('touchend', (e) => {
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
         keyboard.d = false;
     });
 
