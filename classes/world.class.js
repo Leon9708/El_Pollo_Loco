@@ -216,7 +216,7 @@ class World {
     }
 
     endGameWin() {
-        this.level.endboss.playAnimationDead(this.level.endboss.imagesDead);
+        this.level.endboss[0].playAnimationDead(this.level.endboss[0].imagesDead);
         this.win = true;
         this.audio.win_sound.play();
         this.audio.win_cheer.play();
