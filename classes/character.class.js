@@ -131,7 +131,7 @@ class Character extends MoveableObject {
         this.setHit(this.energy);
     }
     collidChicken() {
-        this.energy -= 7;
+        this.energy -= 4;
         world.audio.ouch_sound.play();
         this.setHit(this.energy);
     }

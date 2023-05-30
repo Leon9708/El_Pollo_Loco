@@ -109,7 +109,7 @@ class MoveableObject extends DrawableObject {
             this.coins = 0;
             if (this.world.character.energy >= 1) {
                 this.world.audio.lifePlus_sound.play();
-                this.world.character.energy += 15;
+                this.world.character.energy += 25;
             }
         }
     }

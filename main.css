@@ -33,6 +33,8 @@ main {
     width: 720px;
     position: relative;
     overflow: hidden;
+    position: absolute;
+    top: 7rem;
 }
 
 canvas {
@@ -434,6 +436,7 @@ img {
     main {
         width: 100%;
         flex: 1;
+        position: unset;
     }
     .headtext {
         display: none;
